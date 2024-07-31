@@ -12,7 +12,7 @@ const CategoryGridTile = ({ title, color, id }) => {
           pressed && styles.buttonPressed,
         ]}
         android_ripple={{ color: "#ccc" }}
-        onPress={() => navigation.navigate("Meal Overview", { categoryId: id })}
+        onPress={() => navigation.navigate("MealOverview", { categoryId: id })}
       >
         <View style={styles.innerContainer}>
           <Text style={styles.title}>{title}</Text>

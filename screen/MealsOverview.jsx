@@ -1,6 +1,6 @@
 import { View, StyleSheet, FlatList } from "react-native";
-import React from "react";
-import { MEALS } from "../data/dummyData";
+import { useLayoutEffect } from "react";
+import { MEALS, CATEGORIES } from "../data/dummyData";
 import MealItem from "../components/MealItem.jsx";
 
 const MealsOverview = ({ navigation, route }) => {
@@ -10,8 +10,18 @@ const MealsOverview = ({ navigation, route }) => {
     return mealItem.categoryIds.indexOf(categoryId) >= 0;
   });
 
+  // same as use effect
+  useLayoutEffect(() => {
+    const categoryTitle = CATEGORIES.find(
+      (category) => category.id === categoryId
+    ).title;
+    // setting header title
+    navigation.setOptions({ title: categoryTitle });
+  }, [categoryId, navigation]);
+
   function renderMealItem(itemData) {
     const mealProps = {
+      id: itemData.item.id,
       title: itemData.item.title,
       color: itemData.item.color,
       id: itemData.item.id,

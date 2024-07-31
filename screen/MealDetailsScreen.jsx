@@ -1,10 +1,33 @@
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import React, { useLayoutEffect } from "react";
 import { MEALS } from "../data/dummyData";
+import { Ionicons } from "@expo/vector-icons";
 
-const MealDetailsScreen = ({ route }) => {
+const MealDetailsScreen = ({ route, navigation }) => {
   const { id } = route.params;
   const selectedMeal = MEALS.find((meal) => meal.id === id);
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <Pressable
+            onPress={headerButtonPressHandler}
+            style={({ pressed }) => pressed && { opacity: 0.5 }}
+          >
+            <Ionicons name="star" size={24} color="white" />
+          </Pressable>
+        );
+      },
+    });
+  }, [navigation, headerButtonPressHandler]);
+  const headerButtonPressHandler = () => {};
   return (
     <ScrollView style={{ marginBottom: 30 }}>
       <View>

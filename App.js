@@ -4,6 +4,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import MealsOverview from "./screen/MealsOverview";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MealDetailsScreen from "./screen/MealDetailsScreen";
+import { Pressable } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -25,6 +27,15 @@ export default function App() {
             component={CategoriesScreen}
             options={{
               title: "All Categories",
+              headerRight: () => {
+                return (
+                  <Pressable
+                    style={({ pressed }) => pressed && { opacity: 0.5 }}
+                  >
+                    <Ionicons name="power" size={24} color="white" />
+                  </Pressable>
+                );
+              },
             }}
           />
           <Stack.Screen

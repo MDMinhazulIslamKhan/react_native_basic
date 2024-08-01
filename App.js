@@ -22,17 +22,33 @@ function DrawerNavigator() {
           backgroundColor: "#351401",
         },
         sceneContainerStyle: { backgroundColor: "#3f2f25" },
+        drawerActiveTintColor: "#351401",
+        drawerInactiveTintColor: "white",
+        drawerActiveBackgroundColor: "#e2b497",
+        drawerContentStyle: {
+          backgroundColor: "#351401",
+        },
       }}
     >
       <Drawer.Screen
         name="categories"
         component={CategoriesScreen}
-        options={{ title: "All Categories" }}
+        options={{
+          title: "All Categories",
+          drawerIcon: ({ color, size }) => {
+            return <Ionicons color={color} size={size} name="list" />;
+          },
+        }}
       />
       <Drawer.Screen
         name="favorite"
         component={FavoriteScreen}
-        options={{ title: "Favorite Food" }}
+        options={{
+          title: "Favorite Food",
+          drawerIcon: ({ color, size }) => {
+            return <Ionicons color={color} size={size} name="star" />;
+          },
+        }}
       />
     </Drawer.Navigator>
   );

@@ -6,9 +6,9 @@ import MealsOverview from "./screen/MealsOverview";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import MealDetailsScreen from "./screen/MealDetailsScreen";
-import { Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import FavoriteScreen from "./screen/FavoriteScreen";
+import FavoriteContextProvider from "./store/context/favorite-context";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -57,45 +57,48 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerTintColor: "white",
-            headerStyle: {
-              backgroundColor: "#351401",
-            },
-            contentStyle: { backgroundColor: "#3f2f25" },
-          }}
-        >
-          <Stack.Screen
-            name="Drawer"
-            component={DrawerNavigator}
-            options={{
-              // title: "All Categories",
-              headerShown: false,
-              // headerRight: () => {
-              //   return (
-              //     <Pressable
-              //       style={({ pressed }) => pressed && { opacity: 0.5 }}
-              //     >
-              //       <Ionicons name="power" size={24} color="white" />
-              //     </Pressable>
-              //   );
-              // },
+      {/* wrap with context provider */}
+      <FavoriteContextProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerTintColor: "white",
+              headerStyle: {
+                backgroundColor: "#351401",
+              },
+              contentStyle: { backgroundColor: "#3f2f25" },
             }}
-          />
-          <Stack.Screen
-            name="MealOverview"
-            component={MealsOverview}
-            // options={({ route }) => {
-            //   return {
-            //     title: route?.params?.categoryId,
-            //   };
-            // }}
-          />
-          <Stack.Screen name="MealDetails" component={MealDetailsScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
+          >
+            <Stack.Screen
+              name="Drawer"
+              component={DrawerNavigator}
+              options={{
+                // title: "All Categories",
+                headerShown: false,
+                // headerRight: () => {
+                //   return (
+                //     <Pressable
+                //       style={({ pressed }) => pressed && { opacity: 0.5 }}
+                //     >
+                //       <Ionicons name="power" size={24} color="white" />
+                //     </Pressable>
+                //   );
+                // },
+              }}
+            />
+            <Stack.Screen
+              name="MealOverview"
+              component={MealsOverview}
+              // options={({ route }) => {
+              //   return {
+              //     title: route?.params?.categoryId,
+              //   };
+              // }}
+            />
+            <Stack.Screen name="MealDetails" component={MealDetailsScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </FavoriteContextProvider>
     </>
   );
 }

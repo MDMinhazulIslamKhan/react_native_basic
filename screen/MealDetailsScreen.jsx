@@ -6,29 +6,47 @@ import {
   Text,
   View,
 } from "react-native";
-import React, { useLayoutEffect } from "react";
+import React, { useContext, useLayoutEffect } from "react";
 import { MEALS } from "../data/dummyData";
 import { Ionicons } from "@expo/vector-icons";
+import { FavoriteContext } from "../store/context/favorite-context";
 
 const MealDetailsScreen = ({ route, navigation }) => {
   const { id } = route.params;
   const selectedMeal = MEALS.find((meal) => meal.id === id);
+
+  // take favorite context
+  const favoriteMealContext = useContext(FavoriteContext);
+  // use context values
+  const mealIsFavorite = favoriteMealContext.ids.includes(id);
+  const changeFavoriteStatus = () => {
+    if (mealIsFavorite) {
+      favoriteMealContext.removeFavorite(id);
+    } else {
+      favoriteMealContext.addFavorite(id);
+    }
+  };
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => {
         return (
           <Pressable
-            onPress={headerButtonPressHandler}
+            onPress={changeFavoriteStatus}
             style={({ pressed }) => pressed && { opacity: 0.5 }}
           >
-            <Ionicons name="star" size={24} color="white" />
+            <Ionicons
+              name={mealIsFavorite ? "star" : "star-outline"}
+              size={24}
+              color="white"
+            />
           </Pressable>
         );
       },
       title: "About The Meal",
     });
-  }, [navigation, headerButtonPressHandler]);
-  const headerButtonPressHandler = () => {};
+  }, [navigation, changeFavoriteStatus, mealIsFavorite]);
+
   return (
     <ScrollView style={{ marginBottom: 30 }}>
       <View>

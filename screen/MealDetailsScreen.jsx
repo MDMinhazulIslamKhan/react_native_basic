@@ -25,6 +25,7 @@ const MealDetailsScreen = ({ route, navigation }) => {
           </Pressable>
         );
       },
+      title: "About The Meal",
     });
   }, [navigation, headerButtonPressHandler]);
   const headerButtonPressHandler = () => {};

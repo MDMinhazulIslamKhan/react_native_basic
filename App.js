@@ -1,13 +1,42 @@
+import "./gesture-handler";
 import { StatusBar } from "expo-status-bar";
 import CategoriesScreen from "./screen/CategoryScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import MealsOverview from "./screen/MealsOverview";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import MealDetailsScreen from "./screen/MealDetailsScreen";
 import { Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import FavoriteScreen from "./screen/FavoriteScreen";
 
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+function DrawerNavigator() {
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        headerTintColor: "white",
+        headerStyle: {
+          backgroundColor: "#351401",
+        },
+        sceneContainerStyle: { backgroundColor: "#3f2f25" },
+      }}
+    >
+      <Drawer.Screen
+        name="categories"
+        component={CategoriesScreen}
+        options={{ title: "All Categories" }}
+      />
+      <Drawer.Screen
+        name="favorite"
+        component={FavoriteScreen}
+        options={{ title: "Favorite Food" }}
+      />
+    </Drawer.Navigator>
+  );
+}
 export default function App() {
   return (
     <>
@@ -23,19 +52,20 @@ export default function App() {
           }}
         >
           <Stack.Screen
-            name="Meal Categories"
-            component={CategoriesScreen}
+            name="Drawer"
+            component={DrawerNavigator}
             options={{
-              title: "All Categories",
-              headerRight: () => {
-                return (
-                  <Pressable
-                    style={({ pressed }) => pressed && { opacity: 0.5 }}
-                  >
-                    <Ionicons name="power" size={24} color="white" />
-                  </Pressable>
-                );
-              },
+              // title: "All Categories",
+              headerShown: false,
+              // headerRight: () => {
+              //   return (
+              //     <Pressable
+              //       style={({ pressed }) => pressed && { opacity: 0.5 }}
+              //     >
+              //       <Ionicons name="power" size={24} color="white" />
+              //     </Pressable>
+              //   );
+              // },
             }}
           />
           <Stack.Screen
